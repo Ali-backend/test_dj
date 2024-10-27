@@ -1,0 +1,20 @@
+<h1>Список задач</h1>
+
+<form method="get">
+    <select name="category">
+        <option value="">Все категории</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}"{% if category.id|string == request.GET.category %} selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="search" placeholder="Поиск по названию" value="{{ request.GET.search }}">
+    <button type="submit">Фильтровать</button>
+</form>
+
+<ul>
+    {% for task in tasks %}
+        <li><a href="{% url 'task_detail' task.id %}">{{ task.title }}</a></li>
+    {% empty %}
+        <li>Нет задач</li>
+    {% endfor %}
+</ul>
